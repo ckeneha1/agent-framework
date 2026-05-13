@@ -18,9 +18,9 @@ Prerequisite git operations: [any operations needed before analyst starts, or "n
 ## Build contract
 Build command: [e.g., `uv run python analyze.py`]
 
-Expected output artifacts:
-- [file 1]
-- [file 2]
+Expected output artifacts (must be repo paths, not temp directories):
+- [file 1 — full path from repo root]
+- [file 2 — full path from repo root]
 
 ## Toolkit assessment
 Existing tools being used: [list]
