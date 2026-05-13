@@ -7,7 +7,14 @@ Close Report. Run this at project close before filling in the Metrics
 section of the Close Report.
 
 Usage:
+    # Print formatted report
     python scripts/metrics.py /path/to/session.jsonl
+
+    # Append one row to data/agent_performance_metrics.csv (creates file + headers if new)
+    python scripts/metrics.py /path/to/session.jsonl \\
+        --project "my-post-slug" \\
+        --qa-loops 1 --qa-issues 2 --notes "any caveats" \\
+        --append-csv data/agent_performance_metrics.csv
 
 To find the current session JSONL:
     ls -t ~/.claude/projects/<project-slug>/*.jsonl | head -1
@@ -16,10 +23,12 @@ The project slug is the CWD path with slashes replaced by dashes, e.g.:
     /Users/alice/work/my-project -> -Users-alice-work-my-project
 """
 
+import csv
 import json
 import sys
 import argparse
 from collections import defaultdict
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -218,10 +227,63 @@ def print_report(metrics: dict, jsonl_path: Path):
             print(f"  - {cmd}")
 
 
+CSV_HEADERS = [
+    "date",
+    "project",
+    "session_id",
+    "tool_error_rate_pct",
+    "tool_errors",
+    "tool_calls_total",
+    "git_errors",
+    "files_over_3x_edits",
+    "qa_loops",
+    "qa_issues",
+    "user_turns",
+    "assistant_turns",
+    "output_tokens",
+    "cache_read_tokens",
+    "notes",
+]
+
+
+def append_csv(csv_path: Path, metrics: dict, project: str, session_id: str,
+               qa_loops: int, qa_issues: int, notes: str):
+    exists = csv_path.exists()
+    row = {
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+        "project": project,
+        "session_id": session_id,
+        "tool_error_rate_pct": metrics["tool_calls"]["error_rate_pct"],
+        "tool_errors": metrics["tool_calls"]["errors"],
+        "tool_calls_total": metrics["tool_calls"]["total"],
+        "git_errors": metrics["git_errors"]["count"],
+        "files_over_3x_edits": metrics["rework"]["count"],
+        "qa_loops": qa_loops,
+        "qa_issues": qa_issues,
+        "user_turns": metrics["turns"]["user"],
+        "assistant_turns": metrics["turns"]["assistant"],
+        "output_tokens": metrics["tokens"]["output"],
+        "cache_read_tokens": metrics["tokens"]["cache_read"],
+        "notes": notes,
+    }
+    with open(csv_path, "a", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=CSV_HEADERS)
+        if not exists:
+            writer.writeheader()
+        writer.writerow(row)
+    print(f"Appended row to {csv_path}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Extract session metrics from Claude Code JSONL")
     parser.add_argument("jsonl", type=Path, help="Path to session JSONL file")
     parser.add_argument("--json", action="store_true", help="Output raw JSON instead of formatted report")
+    parser.add_argument("--append-csv", type=Path, metavar="PATH",
+                        help="Append one row to this CSV file (creates with headers if new)")
+    parser.add_argument("--project", default="", help="Project name for CSV row")
+    parser.add_argument("--qa-loops", type=int, default=0, help="Number of QA→Analyst loops")
+    parser.add_argument("--qa-issues", type=int, default=0, help="Total QA issues found")
+    parser.add_argument("--notes", default="", help="Caveats or context for the CSV row")
     args = parser.parse_args()
 
     if not args.jsonl.exists():
@@ -230,6 +292,17 @@ def main():
 
     entries = parse_session(args.jsonl)
     metrics = extract_metrics(entries)
+
+    if args.append_csv:
+        session_id = args.jsonl.stem
+        append_csv(
+            args.append_csv, metrics,
+            project=args.project,
+            session_id=session_id,
+            qa_loops=args.qa_loops,
+            qa_issues=args.qa_issues,
+            notes=args.notes,
+        )
 
     if args.json:
         print(json.dumps(metrics, indent=2))

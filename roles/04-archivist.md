@@ -25,7 +25,9 @@ Run the session metrics script before filling in the Close Report:
 
 ```bash
 python /path/to/agent-framework/scripts/metrics.py \
-  $(ls -t ~/.claude/projects/<project-slug>/*.jsonl | head -1)
+  $(ls -t ~/.claude/projects/<project-slug>/*.jsonl | head -1) \
+  --project "project-slug" --qa-loops N --qa-issues N \
+  --append-csv data/agent_performance_metrics.csv
 ```
 
 Record the output in the Metrics section of the Close Report. Also append one row to `metrics_log.md` in your memory files so the numbers are comparable across projects. The baseline for comparison is in `framework_baseline.md`.
