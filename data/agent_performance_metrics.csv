@@ -1,0 +1,2 @@
+date,project,session_id,tool_error_rate_pct,tool_errors,tool_calls_total,git_errors,files_over_3x_edits,qa_loops,qa_issues,user_turns,assistant_turns,output_tokens,cache_read_tokens,notes
+2026-05-13,color-efficiency-post,13c880df-60a8-4cff-a706-ee4d6b307452,8.9,43,482,15,7,1,1,491,838,209590,72560950,Inflated: session includes pre-framework NanoClaw teardown and legacy-tournament work
