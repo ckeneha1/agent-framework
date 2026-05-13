@@ -1,0 +1,42 @@
+{
+  "description": "Every template file must contain these sections. These are the handoff artifacts — missing sections mean incomplete handoffs.",
+  "files": {
+    "templates/architecture-brief.md": {
+      "required_headings": [
+        "## Scope",
+        "## Analytical question",
+        "## Git workflow",
+        "## Build contract",
+        "## Toolkit assessment",
+        "## Parallelism plan",
+        "## Risk flags"
+      ]
+    },
+    "templates/review-package.md": {
+      "required_headings": [
+        "## Question and findings",
+        "## Chart inventory",
+        "## Claims requiring specific numbers",
+        "## Assumptions and limitations",
+        "## Flagged for critic's attention",
+        "## File manifest"
+      ]
+    },
+    "templates/qa-report.md": {
+      "required_headings": [
+        "## Checks",
+        "## Analyst's flagged items — disposition",
+        "## Sign-off"
+      ]
+    },
+    "templates/close-report.md": {
+      "required_headings": [
+        "## Reproducibility",
+        "## Decisions log",
+        "## Memory files updated",
+        "## Outstanding items",
+        "## Project closed"
+      ]
+    }
+  }
+}

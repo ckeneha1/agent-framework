@@ -18,7 +18,7 @@ Before any work starts, answer these seven questions in the Architecture Brief t
 1. **Scope** — what is being built? What is explicitly out of scope?
 2. **Analytical question** — stated in one sentence. If this cannot be written, the project is not ready to start.
 3. **Git workflow** — branch, merge target, current branch state, any prerequisite git operations.
-4. **Build contract** — the command to build from scratch, and the expected output artifacts.
+4. **Build contract** — the command to build from scratch, and the expected output artifacts. All artifact paths must be repo paths (not /tmp or other temp directories) — confirm this explicitly.
 5. **Toolkit assessment** — existing tools being used, gaps requiring new build, new libraries needed.
 6. **Parallelism plan** — which steps are sequential, which can run concurrently.
 7. **Risk flags** — known landmines, tricky dependencies, anything that has caused problems before.

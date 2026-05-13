@@ -64,6 +64,7 @@ If any check fails, return the brief to Architect with a specific question.
 - [ ] Is the Review Package complete? (all sections present)
 - [ ] Do the files in the manifest actually exist?
 - [ ] Does the build succeed from scratch before review begins?
+- [ ] After the build, do all output artifacts appear in the repo (not a temp directory)? Run `git status` to confirm.
 
 If build fails, return to Analyst immediately — do not review a broken build.
 
