@@ -1,0 +1,27 @@
+{
+  "description": "protocol.md must define all five handoffs and the escalation rule. Missing any handoff breaks the chain.",
+  "files": {
+    "protocol.md": {
+      "required_headings": [
+        "## Flow",
+        "## Handoff 1: User → Architect",
+        "## Handoff 2: Architect → Analyst",
+        "## Handoff 3: Analyst → QA/Critic",
+        "## Handoff 4a: QA/Critic → Analyst (issues found)",
+        "## Handoff 4b: QA/Critic → Archivist (sign-off)",
+        "## Handoff 5: Archivist → Project closed",
+        "## Escalation rule"
+      ]
+    },
+    "CLAUDE.md": {
+      "required_headings": [
+        "## How to activate the framework",
+        "## Role files",
+        "## Artifact templates",
+        "## Handoff protocol",
+        "## Mid-project monitoring signals (Architect)",
+        "## What this framework does NOT do"
+      ]
+    }
+  }
+}

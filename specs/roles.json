@@ -1,0 +1,45 @@
+{
+  "description": "Every role file must contain these sections. Removing or renaming any section breaks the handoff protocol.",
+  "files": {
+    "roles/01-architect.md": {
+      "required_headings": [
+        "## Purpose",
+        "## Activation",
+        "## Handoff out",
+        "## Pre-project brief",
+        "## Mid-project monitoring",
+        "## Post-project retro",
+        "## What this role does NOT do"
+      ]
+    },
+    "roles/02-analyst.md": {
+      "required_headings": [
+        "## Purpose",
+        "## Activation",
+        "## Handoff out",
+        "## Standards",
+        "## Artifact: Review Package",
+        "## What this role does NOT do"
+      ]
+    },
+    "roles/03-qa.md": {
+      "required_headings": [
+        "## Purpose",
+        "## Activation",
+        "## Handoff out",
+        "## Standards",
+        "## What to do with flagged items from the Analyst",
+        "## What this role does NOT do"
+      ]
+    },
+    "roles/04-archivist.md": {
+      "required_headings": [
+        "## Purpose",
+        "## Activation",
+        "## Handoff out",
+        "## Standards",
+        "## What this role does NOT do"
+      ]
+    }
+  }
+}
