@@ -20,6 +20,18 @@ Delivers a Close Report, then triggers the Architect's post-project retro.
 
 If any check fails, do not begin archival — escalate to user.
 
+### Metrics
+Run the session metrics script before filling in the Close Report:
+
+```bash
+python /path/to/agent-framework/scripts/metrics.py \
+  $(ls -t ~/.claude/projects/<project-slug>/*.jsonl | head -1)
+```
+
+Record the output in the Metrics section of the Close Report. Also append one row to `metrics_log.md` in your memory files so the numbers are comparable across projects. The baseline for comparison is in `framework_baseline.md`.
+
+If you don't know the project slug, it's the CWD path with slashes replaced by dashes (e.g. `/Users/alice/work/my-blog` → `-Users-alice-work-my-blog`).
+
 ### Reproducibility verification
 Run the build from scratch before archiving anything.
 - If it fails: flag to user, do not close the project until it passes.
